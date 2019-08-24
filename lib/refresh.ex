@@ -6,13 +6,11 @@ defmodule GitHubWorker do
     GenServer.start_link(__MODULE__, arg)
   end
 
-  @impl true
   @spec init(arg) :: {:ok, arg} when arg: var
   def init(arg) do
     {:ok, arg}
   end
 
-  @impl true
   @spec handle_call(MarkdownRepo.t(), any, state) :: {:reply, GitRepo.t() | :not_found, state}
         when state: var
   def handle_call(repo, _caller, state) do
@@ -35,7 +33,6 @@ defmodule GitHubPool do
     Supervisor.start_link(__MODULE__, arg)
   end
 
-  @impl true
   def init(_arg) do
     pool_options = [
       {:name, {:local, @pool_id}},
