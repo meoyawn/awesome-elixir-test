@@ -28,8 +28,8 @@ defmodule Markdown do
 
   defp reductor(%Block.Para{lines: [cat_desc]}, {cats, repos}) do
     [head | tail] = cats
-    nostars = String.slice(cat_desc, 1..-2)
-    {[%{head | desc: nostars} | tail], repos}
+    strip_stars = String.slice(cat_desc, 1..-2)
+    {[%{head | desc: strip_stars} | tail], repos}
   end
 
   defp reductor(%Block.List{blocks: blocks}, {cats, repos}) do
@@ -58,6 +58,7 @@ defmodule Markdown do
   def fetch do
     "https://raw.githubusercontent.com/h4cc/awesome-elixir/master/README.md"
     |> Http.get()
+    |> to_string()
     |> Earmark.Parser.parse_markdown()
     |> elem(0)
     |> to_repos
