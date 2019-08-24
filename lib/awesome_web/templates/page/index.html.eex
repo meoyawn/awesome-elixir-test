@@ -1,0 +1,12 @@
+<%= for cat <- @cats do %>
+  <h2><%= cat.name %></h2>
+  <p><i><%= cat.desc %></i></p>
+  <ul>
+    <%= for repo <- cat.repos do %>
+      <li <%= raw(style(repo)) %> ><a href="<%= github(repo) %>"><%= repo.repo %></a> ⭐️<%= repo.stars %> 🗓<%= days_since(repo.last_commit) %> — <%= raw(repo.html_desc) %></li>
+    <% end %>
+  </ul>
+<% end %>
+<%= if @cats == [] do %>
+  <i>No results for <%= @stars %> stars. Try the links above</i>
+<% end %>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Awesome Elixir</title>
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm.min.css">
+  </head>
+  <body>
+    <header>
+      <h1>Awesome Elixir</h1>
+      <nav>
+        <ul>
+          <li><a href="/">All</a></li>
+          <li><a href="/?min_stars=10">⩾10⭐️</a></li>
+          <li><a href="/?min_stars=50">⩾50⭐️</a></li>
+          <li><a href="/?min_stars=100">⩾100⭐️</a></li>
+          <li><a href="/?min_stars=500">⩾500⭐️</a></li>
+          <li><a href="/?min_stars=1000">⩾1000⭐️</a></li>
+          <li><a href="/?min_stars=5000">⩾5000⭐️</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+    <footer>
+      Adel Nizamutdinov © 2019
+    </footer>
+  </body>
+</html>
