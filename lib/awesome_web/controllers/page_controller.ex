@@ -3,7 +3,6 @@ defmodule AwesomeWeb.PageController do
 
   @spec index(Plug.Conn.t(), any) :: Plug.Conn.t()
   def index(conn, _params) do
-    conn = Plug.Conn.fetch_query_params(conn)
     min_stars = conn.query_params["min_stars"] || "0"
 
     conn
