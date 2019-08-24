@@ -8,12 +8,10 @@ defmodule Awesome.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Start the Ecto repository
       Awesome.Repo,
-      # Start the endpoint when the application starts
-      AwesomeWeb.Endpoint
-      # Starts a worker by calling: Awesome.Worker.start_link(arg)
-      # {Awesome.Worker, arg},
+      AwesomeWeb.Endpoint,
+      GitHubPool,
+      PeriodicRefresh
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
