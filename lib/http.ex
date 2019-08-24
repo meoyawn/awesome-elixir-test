@@ -1,4 +1,10 @@
 defmodule Http do
+  @moduledoc """
+  Abstraction over httpc/hackney/whatevs
+
+  Everything but 200 and 404 crashes the caller
+  """
+
   @spec get(String.t(), [{charlist, charlist}]) :: charlist | :not_found
   def get(url, headers \\ []) do
     plus_ua = [{'User-Agent', 'httpc'} | headers]

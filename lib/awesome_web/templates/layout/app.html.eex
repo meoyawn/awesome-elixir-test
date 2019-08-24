@@ -26,7 +26,7 @@
       <%= render @view_module, @view_template, assigns %>
     </main>
     <footer>
-      Adel Nizamutdinov © 2019
+      Adel Nizamutdinov 2019
     </footer>
   </body>
 </html>
