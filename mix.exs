@@ -57,7 +57,6 @@ defmodule Awesome.MixProject do
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
       {:typed_struct, "~> 0.1.4"},
       {:earmark, "~> 1.3.5"},
-      {:hackney, "~> 1.15"},
       {:poolboy, "~> 1.5"}
     ]
   end

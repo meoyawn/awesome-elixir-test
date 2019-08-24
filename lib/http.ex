@@ -1,13 +1,9 @@
 defmodule Http do
-  @spec get(String.t(), [{String.t(), String.t()}]) :: String.t() | :not_found
+  @spec get(String.t(), [{charlist, charlist}]) :: String.t() | :not_found
   def get(url, headers \\ []) do
-    case :hackney.request(:get, url, headers, "", follow_redirect: true) do
-      {:ok, 200, _headers, ref} ->
-        {:ok, body} = :hackney.body(ref)
-        body
-
-      {:ok, 404, _headers, _ref} ->
-        :not_found
+    case :httpc.request(:get, {to_charlist(url), headers}, [], []) do
+      {:ok, {{_ver, 200, 'OK'}, _headers, body}} -> to_string(body)
+      {:ok, {{_ver, 404, 'OK'}, _headers, _body}} -> :not_found
     end
   end
 end

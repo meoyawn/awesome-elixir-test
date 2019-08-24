@@ -1,5 +1,5 @@
 defmodule GitHubApi do
-  @headers [{"Authorization", "token b103714d469792ff744671732cfb75215749044a"}]
+  @headers [{'Authorization', 'token b103714d469792ff744671732cfb75215749044a'}]
 
   @spec fetch(MarkdownRepo.t()) :: GitRepo.t() | :not_found
   def fetch(%MarkdownRepo{org: owner, name: repo, desc: desc, category: category}) do
