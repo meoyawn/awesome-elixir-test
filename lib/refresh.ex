@@ -54,6 +54,7 @@ end
 
 defmodule PeriodicRefresh do
   use GenServer, restart: :transient
+  require Logger
 
   @spec start_link(arg) :: :ignore | {:error, arg} | {:ok, pid} when arg: var
   def start_link(arg) do
@@ -62,12 +63,13 @@ defmodule PeriodicRefresh do
 
   @spec init(arg) :: {:ok, arg} when arg: var
   def init(arg) do
-    IO.puts("First refresh")
+    :ok = Logger.info("First refresh")
     send(self(), :refresh)
     {:ok, arg}
   end
 
   defp refresh do
+    :ok = Logger.info("Starting refresh")
     {cats, repos} = Markdown.fetch()
 
     repos
@@ -83,21 +85,22 @@ defmodule PeriodicRefresh do
   end
 
   def handle_info(:refresh, state) do
-    IO.puts("Starting refresh")
     {:ok, pid} = Task.start(&refresh/0)
     Process.monitor(pid)
     {:noreply, state}
   end
 
+  @hour 3600 * 1000
+
   def handle_info({:DOWN, _ref, :process, _pid, :normal}, state) do
-    IO.puts("Success. Next refresh in 24h")
-    Process.send_after(self(), :refresh, 24 * 3600 * 1000)
+    :ok = Logger.info("Success. Next refresh in 24h")
+    Process.send_after(self(), :refresh, 24 * @hour)
     {:noreply, state}
   end
 
   def handle_info({:DOWN, _ref, :process, _pid, _msg}, state) do
-    IO.puts("Failure. Next refresh in 30m")
-    Process.send_after(self(), :refresh, 30 * 60 * 1000)
+    :ok = Logger.info("Failure. Next refresh in 1h")
+    Process.send_after(self(), :refresh, 1 * @hour)
     {:noreply, state}
   end
 end
