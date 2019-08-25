@@ -5,11 +5,12 @@
 use Mix.Config
 
 config :awesome, Awesome.Repo,
-  ssl: true,
-  username: "postgres",
-  password: "postgres",
-  database: "awesome",
-  hostname: "localhost",
+  username: System.get_env("PGUSER"),
+  password: System.get_env("PGPASSWORD"),
+  database: System.get_env("PGDATABASE"),
+  hostname: System.get_env("PGHOST"),
+  port: System.get_env("PGPORT") |> String.to_integer(),
+  show_sensitive_data_on_connection_error: true,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 config :awesome, AwesomeWeb.Endpoint,
