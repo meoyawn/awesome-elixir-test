@@ -5,14 +5,12 @@ services:
     environment:
       POSTGRES_DB: awesome
     container_name: "pg_awesome"
-    ports:
-      - "5432:5432"
   web:
     build: .
     container_name: "awesome"
     environment:
       DATABASE_URL: postgresql://db/awesome
     ports:
-      - "80:4000"
+      - "4000:4000"
     depends_on:
       - db
