@@ -1,8 +1,5 @@
 version: "3"
 services:
-  web:
-    build: .
-    container_name: "awesome"
   db:
     image: "postgres:alpine"
     environment:
@@ -10,3 +7,6 @@ services:
     container_name: "pg_awesome"
     ports:
       - "5432:5432"
+  web:
+    build: .
+    container_name: "awesome"

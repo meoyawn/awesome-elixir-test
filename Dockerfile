@@ -1,4 +1,4 @@
-FROM elixir:latest as build
+FROM elixir:alpine as build
 
 # prepare build dir
 RUN mkdir /app
@@ -32,7 +32,7 @@ RUN mix compile
 RUN mix release
 
 # prepare release image
-FROM alpine AS app
+FROM alpine:3.9 AS app
 RUN apk add --update bash openssl
 
 RUN mkdir /app
@@ -45,4 +45,4 @@ USER nobody
 ENV HOME=/app
 
 COPY start.sh start.sh
-ENTRYPOINT ["start.sh"]
+CMD ["./start.sh"]
