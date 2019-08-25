@@ -60,13 +60,13 @@ defmodule PeriodicRefresh do
 
   @spec init(arg) :: {:ok, arg} when arg: var
   def init(arg) do
-    :ok = Logger.info("First refresh")
+    :ok = Logger.warn("First refresh")
     send(self(), :refresh)
     {:ok, arg}
   end
 
   defp refresh do
-    :ok = Logger.info("Starting refresh")
+    :ok = Logger.warn("Starting refresh")
     {cats, repos} = Markdown.fetch()
 
     repos
@@ -90,13 +90,13 @@ defmodule PeriodicRefresh do
   @hour 3600 * 1000
 
   def handle_info({:DOWN, _ref, :process, _pid, :normal}, state) do
-    :ok = Logger.info("Success. Next refresh in 24h")
+    :ok = Logger.warn("Success. Next refresh in 24h")
     Process.send_after(self(), :refresh, 24 * @hour)
     {:noreply, state}
   end
 
   def handle_info({:DOWN, _ref, :process, _pid, _msg}, state) do
-    :ok = Logger.info("Failure. Next refresh in 1h")
+    :ok = Logger.warn("Failure. Next refresh in 1h")
     Process.send_after(self(), :refresh, 1 * @hour)
     {:noreply, state}
   end

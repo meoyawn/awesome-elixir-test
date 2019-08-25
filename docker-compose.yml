@@ -5,15 +5,14 @@ services:
     environment:
       POSTGRES_DB: awesome
     container_name: "pg_awesome"
-    ports: "5432:5432"
+    ports:
+      - "5432:5432"
   web:
     build: .
     container_name: "awesome"
     environment:
-      PGUSER: postgres
-      PGPASSWORD: postgres
-      PGDATABASE: awesome
-      PGPORT: 5432
-      PGHOST: db
-    ports: "4000:4000"
-    depends_on: db
+      DATABASE_URL: postgresql://db/awesome
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
