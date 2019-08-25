@@ -6,5 +6,5 @@ config :awesome, Awesome.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 config :awesome, AwesomeWeb.Endpoint,
-  http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4000")],
+  http: [port: String.to_integer(System.get_env("PORT") || "4000"), compress: true],
   server: true
