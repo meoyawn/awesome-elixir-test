@@ -1,4 +1,4 @@
-defmodule MyApp.Release do
+defmodule Awesome.Release do
   @app :awesome
 
   defp repos do
