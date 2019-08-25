@@ -13,7 +13,6 @@ config :awesome,
 # Configures the endpoint
 config :awesome, AwesomeWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "TNpWfeO35Ph4+35I4JNy0NZ9j5YJ8VJnogtOLTTDNeKK1LmZ6ObGWD+c+97p/SQ3",
   render_errors: [view: AwesomeWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Awesome.PubSub, adapter: Phoenix.PubSub.PG2]
 
