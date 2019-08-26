@@ -53,11 +53,13 @@ defmodule Awesome.MixProject do
       {:plug_cowboy, "~> 2.0"},
 
       # added
-      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
       {:typed_struct, "~> 0.1.4"},
       {:earmark, "~> 1.3.5"},
-      {:poolboy, "~> 1.5"}
+      {:poolboy, "~> 1.5"},
+      {:fake_server, "~> 2.0", only: :test},
+      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false}
     ]
   end
 

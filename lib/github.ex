@@ -1,9 +1,13 @@
 defmodule GitHubApi do
+  @api_github "https://api.github.com"
   @headers [{'Authorization', 'token b103714d469792ff744671732cfb75215749044a'}]
 
-  @spec fetch(MarkdownRepo.t()) :: GitRepo.t() | :not_found
-  def fetch(%MarkdownRepo{org: owner, name: repo, desc: desc, category: category}) do
-    case "https://api.github.com/repos/#{owner}/#{repo}" |> Http.get(@headers) do
+  @spec fetch(MarkdownRepo.t(), String.t()) :: GitRepo.t() | :not_found
+  def fetch(
+        %MarkdownRepo{org: owner, name: repo, desc: desc, category: category},
+        addr \\ @api_github
+      ) do
+    case "#{addr}/repos/#{owner}/#{repo}" |> Http.get(@headers) do
       :not_found ->
         :not_found
 
@@ -11,7 +15,7 @@ defmodule GitHubApi do
         %{"stargazers_count" => stars} = Jason.decode!(body)
 
         [%{"commit" => %{"author" => %{"date" => date}}}] =
-          "https://api.github.com/repos/#{owner}/#{repo}/commits?per_page=1"
+          "#{addr}/repos/#{owner}/#{repo}/commits?per_page=1"
           |> Http.get(@headers)
           |> Jason.decode!()
 
