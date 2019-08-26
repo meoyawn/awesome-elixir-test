@@ -28,8 +28,7 @@ defmodule Markdown do
 
   defp reductor(%Block.Para{lines: [cat_desc]}, {cats, repos}) do
     [head | tail] = cats
-    strip_stars = String.slice(cat_desc, 1..-2)
-    {[%{head | desc: strip_stars} | tail], repos}
+    {[%{head | desc: cat_desc} | tail], repos}
   end
 
   defp reductor(%Block.List{blocks: blocks}, {cats, repos}) do
