@@ -31,7 +31,7 @@ RUN mix compile
 # build release
 RUN mix release
 
-# prepare release image. Erlang doesn't work on latest Alpine (3.10), so use 3.9
+# prepare release image
 FROM alpine:3.9 AS app
 RUN apk add --update bash openssl
 
@@ -44,5 +44,4 @@ USER nobody
 
 ENV HOME=/app
 
-COPY start.sh start.sh
-CMD ["./start.sh"]
+CMD bin/awesome eval "Awesome.Release.migrate" ; bin/awesome start
