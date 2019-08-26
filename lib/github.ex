@@ -1,6 +1,6 @@
 defmodule GitHubApi do
   @api_github "https://api.github.com"
-  @headers [{'Authorization', 'token b103714d469792ff744671732cfb75215749044a'}]
+  @headers [{'Authorization', 'token 50048cabab30ba4d8ddf70cc511268ac264cade7'}]
 
   @spec fetch(MarkdownRepo.t(), String.t()) :: GitRepo.t() | :not_found
   def fetch(

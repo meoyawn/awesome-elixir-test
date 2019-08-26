@@ -1,6 +1,16 @@
 defmodule AwesomeWeb.PageView do
   use AwesomeWeb, :view
 
+  @spec to_id(String.t()) :: String.t()
+  def to_id(str) do
+    String.downcase(str) |> String.replace(" ", "-")
+  end
+
+  @spec to_html(String.t()) :: String.t()
+  def to_html(md) do
+    Earmark.as_html!(md)
+  end
+
   @spec github(GitRepo.t()) :: String.t()
   def github(%GitRepo{owner: owner, repo: repo}) do
     "https://github.com/#{owner}/#{repo}"
