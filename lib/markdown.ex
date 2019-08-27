@@ -53,13 +53,18 @@ defmodule Markdown do
     |> Enum.reduce({[], []}, &reductor/2)
   end
 
-  @spec fetch :: {[MarkdownCategory.t()], [MarkdownRepo.t()]}
-  def fetch do
-    "https://raw.githubusercontent.com/h4cc/awesome-elixir/master/README.md"
-    |> Http.get()
-    |> to_string()
-    |> Earmark.Parser.parse_markdown()
-    |> elem(0)
-    |> to_repos
+  @spec fetch(String.t()) :: {[MarkdownCategory.t()], [MarkdownRepo.t()]}
+  def fetch(host \\ "https://raw.githubusercontent.com") do
+    case Http.get("#{host}/h4cc/awesome-elixir/master/README.md") do
+      :not_found ->
+        raise "README not found. Maybe try again later"
+
+      x ->
+        x
+        |> to_string()
+        |> Earmark.Parser.parse_markdown()
+        |> elem(0)
+        |> to_repos
+    end
   end
 end
