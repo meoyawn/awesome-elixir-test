@@ -66,6 +66,7 @@ defmodule PeriodicRefresh do
     {:ok, arg}
   end
 
+  @spec refresh(String.t(), String.t()) :: any
   def refresh(readme \\ Markdown.host(), api \\ GitHubApi.host()) do
     {cats, repos} = Markdown.fetch(readme)
 

@@ -11,6 +11,8 @@ defmodule Awesome.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
+
+      # static analysis
       dialyzer: [
         flags: [
           :error_handling,
@@ -18,6 +20,15 @@ defmodule Awesome.MixProject do
           :underspecs,
           :unmatched_returns
         ]
+      ],
+
+      # test coverage
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
       ]
     ]
   end
@@ -59,7 +70,8 @@ defmodule Awesome.MixProject do
       {:earmark, "~> 1.3.5"},
       {:poolboy, "~> 1.5"},
       {:fake_server, "~> 2.0", only: :test},
-      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false}
+      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
