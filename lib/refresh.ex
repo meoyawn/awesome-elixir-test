@@ -11,10 +11,8 @@ defmodule GitHubWorker do
     {:ok, arg}
   end
 
-  @spec handle_call(MarkdownRepo.t(), any, state) :: {:reply, GitRepo.t() | :not_found, state}
-        when state: var
-  def handle_call(repo, _caller, state) do
-    {:reply, GitHubApi.fetch(repo), state}
+  def handle_call({url, repo}, _caller, state) do
+    {:reply, GitHubApi.fetch(repo, url), state}
   end
 end
 
@@ -23,9 +21,12 @@ defmodule GitHubPool do
 
   @pool_id :github
 
-  @spec submit(MarkdownRepo.t()) :: GitRepo.t() | :not_found
-  def submit(repo) do
-    :poolboy.transaction(@pool_id, fn pid -> GenServer.call(pid, repo, :infinity) end, :infinity)
+  def submit(url, repo) do
+    :poolboy.transaction(
+      @pool_id,
+      fn pid -> GenServer.call(pid, {url, repo}, :infinity) end,
+      :infinity
+    )
   end
 
   @spec start_link(arg) :: :ignore | {:error, arg} | {:ok, pid} when arg: var
@@ -65,12 +66,12 @@ defmodule PeriodicRefresh do
     {:ok, arg}
   end
 
-  defp refresh do
+  def refresh(readme \\ Markdown.host(), api \\ GitHubApi.host()) do
     :ok = Logger.warn("Starting refresh")
-    {cats, repos} = Markdown.fetch()
+    {cats, repos} = Markdown.fetch(readme)
 
     repos
-    |> Enum.map(fn repo -> Task.async(fn -> GitHubPool.submit(repo) end) end)
+    |> Enum.map(fn repo -> Task.async(fn -> GitHubPool.submit(api, repo) end) end)
     |> Task.yield_many(:infinity)
     |> Enum.flat_map(fn {_task, {:ok, result}} ->
       case result do

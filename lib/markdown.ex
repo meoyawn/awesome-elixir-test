@@ -53,8 +53,11 @@ defmodule Markdown do
     |> Enum.reduce({[], []}, &reductor/2)
   end
 
+  @spec host :: String.t()
+  def host, do: "https://raw.githubusercontent.com"
+
   @spec fetch(String.t()) :: {[MarkdownCategory.t()], [MarkdownRepo.t()]}
-  def fetch(host \\ "https://raw.githubusercontent.com") do
+  def fetch(host) do
     case Http.get("#{host}/h4cc/awesome-elixir/master/README.md") do
       :not_found ->
         raise "README not found. Maybe try again later"

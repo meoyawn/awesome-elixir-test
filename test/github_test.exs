@@ -31,11 +31,7 @@ defmodule GitHubApiTest do
     dt_str = DateTime.to_iso8601(dt)
 
     route("/repos/foo/bar", ok!(~s({"stargazers_count": 500})))
-
-    route(
-      "/repos/foo/bar/commits",
-      ok!(~s([{"commit": {"author": {"date": "#{dt_str}"}}}]))
-    )
+    route("/repos/foo/bar/commits", ok!(~s([{"commit": {"author": {"date": "#{dt_str}"}}}])))
 
     act =
       GitHubApi.fetch(

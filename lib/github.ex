@@ -1,12 +1,11 @@
 defmodule GitHubApi do
-  @api_github "https://api.github.com"
   @headers [{'Authorization', 'token 50048cabab30ba4d8ddf70cc511268ac264cade7'}]
 
+  @spec host :: String.t()
+  def host, do: "https://api.github.com"
+
   @spec fetch(MarkdownRepo.t(), String.t()) :: GitRepo.t() | :not_found
-  def fetch(
-        %MarkdownRepo{org: owner, name: repo, desc: desc, category: category},
-        addr \\ @api_github
-      ) do
+  def fetch(%MarkdownRepo{org: owner, name: repo, desc: desc, category: category}, addr) do
     case "#{addr}/repos/#{owner}/#{repo}" |> Http.get(@headers) do
       :not_found ->
         :not_found
