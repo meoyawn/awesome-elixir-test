@@ -15,3 +15,7 @@ It takes a while for the app to fetch GitHub data for the first time, so you can
 ```sh
 docker-compose down
 ```
+
+## Supervision tree
+
+![diagram](lol.png)
