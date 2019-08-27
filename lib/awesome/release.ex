@@ -2,7 +2,7 @@ defmodule Awesome.Release do
   @app :awesome
 
   defp repos do
-    Application.load(@app)
+    :ok = Application.load(@app)
     Application.fetch_env!(@app, :ecto_repos)
   end
 

@@ -67,7 +67,6 @@ defmodule PeriodicRefresh do
   end
 
   def refresh(readme \\ Markdown.host(), api \\ GitHubApi.host()) do
-    :ok = Logger.warn("Starting refresh")
     {cats, repos} = Markdown.fetch(readme)
 
     repos
@@ -83,6 +82,7 @@ defmodule PeriodicRefresh do
   end
 
   def handle_info(:refresh, state) do
+    :ok = Logger.warn("Starting refresh")
     {:ok, pid} = Task.start(&refresh/0)
     Process.monitor(pid)
     {:noreply, state}
